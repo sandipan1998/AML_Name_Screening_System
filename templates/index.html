@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name Screening</title>
+</head>
+<body>
+    <h2>AML Name Screening</h2>
+    <form method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required><br><br>
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required><br><br>
+
+        <button type="submit">Check</button>
+    </form>
+
+    {% if matches %}
+        <h3>Matching Results:</h3>
+        <ul>
+            {% for match in matches %}
+                <li>
+                    <strong>Name:</strong> {{ match.watchlist_name }}<br>
+                    <strong>Score:</strong> {{ match.score }}<br>
+                    <strong>DOB:</strong> {{ match.dob }}<br>
+                    <strong>Country:</strong> {{ match.country }}
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No matches found.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,9 @@
+numpy
+gunicorn
+scikit-learn
+pandas
+fuzzywuzzy
+flask
+jellyfish
+PyYAML
+python-dotenv

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AML Name Screening</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px #888888;
+            display: inline-block;
+            text-align: left;
+            width: 50%;
+        }
+        label, input {
+            display: block;
+            margin: 10px auto;
+            width: 90%;
+            padding: 8px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            width: 95%;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .match-table {
+            margin-top: 20px;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            border-collapse: collapse;
+            background: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px #888888;
+        }
+        .match-table th, .match-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+        }
+        .match-table th {
+            background-color: #007bff;
+            color: white;
+        }
+        .category-tp {
+            color: green;
+            font-weight: bold;
+        }
+        .category-tna {
+            color: orange;
+            font-weight: bold;
+        }
+        .category-fp {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>AML Name Screening</h2>
+    <form action="/" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+
+        <label for="country">Country:</label>
+        <input type="text" id="country" name="country" required>
+
+        <button type="submit">Check Name</button>
+    </form>
+
+    {% if matches %}
+        <h3>Matching Results:</h3>
+        <table class="match-table">
+            <tr>
+                <th>Watchlist Name</th>
+                <th>DOB</th>
+                <th>Country</th>
+                <th>Match Score</th>
+                <th>Category</th>
+            </tr>
+            {% for match in matches %}
+                <tr>
+                    <td>{{ match.watchlist_name }}</td>
+                    <td>{{ match.dob }}</td>
+                    <td>{{ match.country }}</td>
+                    <td>{{ match.score|round(2) }}%</td>
+                    <td class="{% if match.category == 'TP (True Positive)' %}category-tp{% elif match.category == 'TNA (True No Action)' %}category-tna{% else %}category-fp{% endif %}">
+                        {{ match.category }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p class="result">No matches found.</p>
+    {% endif %}
+
+</body>
+</html>
